@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Ticketera</title>
+        <div id="panel-inicio">
+  <h1>Panel de inicio</h1>
+  <div id="informacion-general">
+    <h2>Informacion general</h2>
+    <ul>
+      <li>Tickets en atencion: <span id="tickets-en-atencion"></span></li>
+      <li>Tickets pendientes: <span id="tickets-pendientes"></span></li>
+      <li>Tickets atendidos: <span id="tickets-atendidos"></span></li>
+    </ul>
+  </div>
+  <div id="tabla-tickets">
+    <h2>Tickets del mes en curso</h2>
+    <table id="tabla-tickets-mes">
+      <thead>
+        <tr>
+          <th>Numero de ticket,</th>
+          <th>Fecha,</th>
+          <th>Usuario,</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-tickets-mes">
+        <!-- Aquí se mostrarán los tickets del mes en curso -->
+      </tbody>
+    </table>
+    <div id="opciones-filtrado">
+      <label for="fecha-inicio">Fecha de inicio:</label>
+      <input type="date" id="fecha-inicio" />
+      <label for="fecha-fin">Fecha de fin:</label>
+      <input type="date" id="fecha-fin" />
+      <label for="usuario">Usuario:</label>
+      <select id="usuario">
+        <option value="">Todos</option>
+        <!-- Aquí se mostrarán los usuarios disponibles -->
+      </select>
+      <label for="numero-ticket">Numero de ticket:</label>
+      <input type="number" id="numero-ticket" />
+      <button id="btn-filtrar">Filtrar</button>
+    </div>
+  </div>
+</div>
+        <script type="text/javascript">
+        </script>
+    </body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Perfiles</title>
+  <script src="perfiles.js"></script>
+</head>
+<body>
+  <h1>Perfiles</h1>
+  <ul id="lista-perfiles"></ul>
+  <form id="formulario-permisos">
+    <label for="id-usuario">ID de usuario:</label>
+    <input type="number" id="id-usuario" />
+    <label for="permisos">Permisos:</label>
+    <select multiple id="permisos">
+      <option value="administrar-usuarios">Administrar usuarios</option>
+      <option value="crear-tickets">Crear tickets</option>
+      <option value="reasignar-tickets">Reasignar tickets</option>
+    </select>
+    <button id="btn-asignar-permisos">Asignar permisos</button>
+  </form>
+  <script>
+    const listaPerfiles = document.getElementById('lista-perfiles');
+    const formularioPermisos = document.getElementById('formulario-permisos');
+    const btnAsignarPermisos = document.getElementById('btn-asignar-permisos');
+
+    // Agregar evento de clic al botón de asignar permisos
+    btnAsignarPermisos.addEventListener('click', (evento) => {
+      evento.preventDefault();
+      const idUsuario = formularioPermisos.elements['id-usuario'].value;
+      const permisosSeleccionados = Array.from(formularioPermisos.elements['permisos'].selectedOptions).map((opcion) => {
+        return opcion.value;
+      });
+      asignarPermisos(idUsuario, permisosSeleccionados);
+    });
+  </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Administracion de usuarios</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <h1>Administracion de usuarios</h1>
+  <div id="filtro-usuario">
+    <label for="nombre-usuario">Nombre de usuario:</label>
+    <input type="text" id="nombre-usuario" />
+    <button id="btn-filtrar-usuario">Filtrar</button>
+  </div>
+  <div id="lista-usuarios">
+    <h3>Lista de usuarios</h3>
+    <ul id="ul-usuarios"></ul>
+  </div>
+  <div id="permisos-usuario">
+    <h3>Permisos del usuario</h3>
+    <ul id="ul-permisos"></ul>
+  </div>
+  <script src="administracion-usuarios.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tickets</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <h1>Tickets</h1>
+    <div id="tabla-tickets">
+    <table id="tabla-tickets">
+      <thead>
+        <tr>
+          <th>Folio (# de ticket),</th>
+          <th>Fecha de alta,</th>
+          <th>Solicitante (creador del ticket),</th>
+          <th>Descripcion,</th>
+          <th>Area,</th>
+          <th>Estatus,</th>
+          <th>Asignado a,</th>
+          <th>Prioridad,</th>
+          <th>Ver detalle,</th>
+        </tr>
+      </thead>
+      <tbody id="tbody-tickets"></tbody>
+    </table>
+  </div>
+  <div id="filtro-tickets">
+    <label for="filtro-estatus">Estatus:</label>
+    <select id="filtro-estatus">
+      <option value="en-proceso">En proceso</option>
+      <option value="finalizado">Finalizado</option>
+    </select>
+    <label for="filtro-fecha">Fecha:</label>
+    <input type="date" id="filtro-fecha" />
+    <label for="filtro-asignar">Asignar:</label>
+    <select id="filtro-asignar">
+      <option value="por-asignar">Por asignar</option>
+    </select>
+    <button id="btn-filtrar-tickets">Filtrar</button>
+  </div>
+  <script src="tickets.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Permisos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <h1>Permisos</h1>
+  <div id="permisos-modulos">
+    <h2>Permisos por modulos</h2>
+    <ul>
+      <li>
+        <h3>Inicio</h3>
+        <ul>
+          <li>
+            <input type="checkbox" id="permiso-ver-filtros-fechas" />
+            <label for="permiso-ver-filtros-fechas">Ver filtros de fechas</label>
+          </li>
+          <li>
+            <input type="checkbox" id="permiso-ver-modulo-inicio" />
+            <label for="permiso-ver-modulo-inicio">Ver modulo de inicio</label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h3>Tickets</h3>
+        <ul>
+          <li>
+            <input type="checkbox" id="permiso-atender-ticket" />
+            <label for="permiso-atender-ticket">Atender ticket</label>
+          </li>
+          <li>
+            <input type="checkbox" id="permiso-ver-detalle-ticket" />
+            <label for="permiso-ver-detalle-ticket">Ver detalle del ticket</label>
+          </li>
+          <li>
+            <input type="checkbox" id="permiso-ver-modulo-tickets" />
+            <label for="permiso-ver-modulo-tickets">Ver modulo de tickets</label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h3>Nuevo ticket</h3>
+        <ul>
+          <li>
+            <input type="checkbox" id="permiso-asignar-prioridad" />
+            <label for="permiso-asignar-prioridad">Asignar prioridad</label>
+          </li>
+          <li>
+            <input type="checkbox" id="permiso-ver-modulo-nuevo-ticket" />
+            <label for="permiso-ver-modulo-nuevo-ticket">Ver modulo de creacion de ticket</label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h3>Administrador de usuarios</h3>
+        <ul>
+          <li>
+            <input type="checkbox" id="permiso-reasignar-departamentos" />
+            <label for="permiso-reasignar-departamentos">Reasignar departamentos</label>
+          </li>
+          <li>
+            <input type="checkbox" id="permiso-reasignar-modulos-al-usuario" />
+            <label for="permiso-reasignar-modulos-al-usuario">Reasignar modulos al usuario</label>
+          </li>
+          <li>
+            <input type="checkbox" id="permiso-visualizar-modulo-administrador-de-usuarios" />
+            <label for="permiso-visualizar-modulo-administrador-de-usuarios">Visualizar modulo de administrador de usuarios</label>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <h3>Chat</h3>
+        <ul>
+          <li>
+            <input type="checkbox" id="permiso-visualizar-chat-de-tickets" />
+            <label for="permiso-visualizar-chat-de-tickets">Visualizar chat de los tickets</label>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <script src="permisos.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Departamentos</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <h1>Departamentos</h1>
+  <div id="lista-departamentos">
+    <h3>Lista de departamentos</h3>
+    <ul id="ul-departamentos"></ul>
+  </div>
+  <div id="filtro-departamentos">
+    <label for="nombre-departamento">Nombre de departamento:</label>
+    <input type="text" id="nombre-departamento" />
+    <button id="btn-filtrar-departamentos">Filtrar</button>
+  </div>
+  <div id="form-departamento">
+    <h3>Crear/Editar departamento</h3>
+    <form id="form-departamento">
+      <label for="nombre-departamento-form">Nombre de departamento:</label>
+      <input type="text" id="nombre-departamento-form" />
+      <button id="btn-crear-departamento">Crear</button>
+      <button id="btn-editar-departamento">Editar</button>
+    </form>
+  </div>
+  <script src="departamentos.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <h1>Chat</h1>
+  <div id="chat-container">
+    <div id="chat-mensajes">
+      <!-- Mensajes del chat -->
+    </div>
+    <div id="chat-enviar">
+      <input type="text" id="chat-mensaje" placeholder="Escribe un mensaje...">
+      <button id="chat-enviar-btn">Enviar</button>
+      <input type="file" id="chat-archivo" accept=".pdf, .docx, .jpg, .png, .jpeg">
+    </div>
+  </div>
+  <script src="chat.js"></script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nuevo ticket</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+  <h1>Nuevo ticket</h1>
+  <form id="form-nuevo-ticket">
+    <div>
+      <label for="departamento-reporte">Departamento que reporta el problema:</label>
+      <select id="departamento-reporte" required>
+        <option value="">Seleccione un departamento</option>
+        <!-- Opciones de departamentos -->
+      </select>
+    </div>
+    <div>
+      <label for="departamento-atencion">Departamento de atencion del problema:</label>
+      <select id="departamento-atencion" required>
+        <option value="">Seleccione un departamento</option>
+        <!-- Opciones de departamentos -->
+      </select>
+    </div>
+    <div>
+      <label for="nivel-prioridad">Nivel de prioridad:</label>
+      <select id="nivel-prioridad" required>
+        <option value="">Seleccione un nivel de prioridad</option>
+        <option value="bajo">Bajo</option>
+        <option value="medio">Medio</option>
+        <option value="alto">Alto</option>
+      </select>
+    </div>
+    <div>
+      <label for="descripcion-reporte">Descripcion del reporte:</label>
+      <textarea id="descripcion-reporte" required></textarea>
+    </div>
+    <div>
+      <label for="evidencias">Evidencias (carga de archivos):</label>
+      <input type="file" id="evidencias" multiple>
+    </div>
+    <div>
+      <label for="usuario-atencion">Usuario de atencion:</label>
+      <select id="usuario-atencion">
+        <option value="">Seleccione un usuario</option>
+        <!-- Opciones de usuarios -->
+      </select>
+    </div>
+    <button id="btn-crear-ticket">Crear ticket</button>
+  </form>
+  <script src="nuevo-ticket.js"></script>
+</body>
+</html>
